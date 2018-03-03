@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[ ]:
-
-
 from bs4 import BeautifulSoup
 import urllib2
 import pandas as pd
@@ -14,9 +8,6 @@ import re
 import json
 import mysql.connector
 import httplib
-
-
-# In[ ]:
 
 
 #extract aggregate data 
@@ -36,16 +27,10 @@ def extractcurrency(r):
     return(df, currency, df_to_join)
 
 
-# In[ ]:
-
-
 #extract currency name for url using json
 r = 'https://api.coinmarketcap.com/v1/ticker/?limit=0'
 
 df, currency, df_to_join = extractcurrency(r)
-
-
-# In[ ]:
 
 
 #correct dates for url
@@ -73,17 +58,11 @@ def correctdate(start_date, end_date):
     return(s_date, e_date)
 
 
-# In[ ]:
-
-
 #enter dates
 start_date = '2013-04-28'
 end_date = time.strftime("%Y-%m-%d")
 
 startdate, enddate = correctdate(start_date, end_date)
-
-
-# In[ ]:
 
 
 #check if urls work
@@ -100,9 +79,6 @@ def correcturl(crypto, startdate, enddate):
     return(wurl, nwurl, err_code)
 
 
-# In[ ]:
-
-
 wurl = [] #stores working currencies
 nwurl = [] #stores not working currencies
 err_code = [] #stores error codes for not working currencies
@@ -113,17 +89,11 @@ for c in currency:
 notworkingerror = pd.DataFrame(OrderedDict({'notworking': notworking,'error_code': error_code}))
 
 
-# In[ ]:
-
-
 #count number of coins not parsed
 if len(notworking) > 0:
     print 'Unable to parse data for',len(notworking),'coin/s. Data in notworkingerror'
 else:
     pass
-
-
-# In[ ]:
 
 
 #read url
@@ -140,9 +110,6 @@ def readurl(wurl, startdate, enddate):
     return(page)
 
 
-# In[ ]:
-
-
 #headers for complete dataset -- historical
 def historicalheaders(soup):
     headers = soup.tr.get_text()
@@ -152,9 +119,6 @@ def historicalheaders(soup):
     headers.insert(len(headers), 'id')
     
     return(headers)
-
-
-# In[ ]:
 
 
 #data for complete dataset -- historical
@@ -169,16 +133,10 @@ def historicaldata(w, soup):
     return(list_)
 
 
-# In[ ]:
-
-
 #init
 hist_data = pd.DataFrame()
 #any_large_number should be any large number so that the coin name is always inserted at the end of the list
 any_large_number = 6000
-
-
-# In[ ]:
 
 
 #extract data for all working currencies
@@ -197,13 +155,7 @@ def workingdata(working, startdate, enddate, hist_data):
     return(hist_data)
 
 
-# In[ ]:
-
-
 complete = workingdata(working, startdate, enddate, hist_data)
-
-
-# In[ ]:
 
 
 #find currencies with no transactions during specified time period
@@ -217,13 +169,7 @@ def getnotransactions(complete, working):
     return(notransaction)
 
 
-# In[ ]:
-
-
 notransaction = getnotransactions(complete, working)
-
-
-# In[ ]:
 
 
 #information on currencies with no tranactions
@@ -232,9 +178,6 @@ if len(notransaction) > 0:
     print 'Data in notransaction'
 else:
     pass
-
-
-# In[ ]:
 
 
 #clean snapshot data to prep for move into MySQL 
@@ -254,19 +197,13 @@ def cleansnapshot(df):
     return(list_snap)
 
 
-# In[ ]:
-
-
 list_snap = cleansnapshot(df)
-
-
-# In[ ]:
 
 
 #insert ignore -- errors ignored
 def snapshottosql(list_snap):
     #create connection
-    conn = mysql.connector.connect(user = 'root', password = 'Akshay1894@', host = 'localhost', database = 'practice')
+    conn = mysql.connector.connect(user = 'user', password = 'password', host = 'localhost', database = 'database')
     mycursor = conn.cursor()
     mycursor.execute("USE practice")
     
@@ -284,16 +221,9 @@ def snapshottosql(list_snap):
     except Exception as e:
         
         print(e)
-        
-
-
-# In[ ]:
 
 
 snapshottosql(list_snap)
-
-
-# In[ ]:
 
 
 #clean historical data to prep for move into MySQL
@@ -322,19 +252,13 @@ def cleanhistorical(complete, df_to_join):
     return(list_hist)
 
 
-# In[ ]:
-
-
 list_hist = cleanhistorical(complete, df_to_join)
-
-
-# In[ ]:
 
 
 #insert ignore -- errors ignored
 def historicaltosql(list_hist):
     #create connection
-    conn = mysql.connector.connect(user = 'root', password = 'Akshay1894@', host = 'localhost', database = 'practice')
+    conn = mysql.connector.connect(user = 'user', password = 'password', host = 'localhost', database = 'database')
     mycursor = conn.cursor()
     mycursor.execute("USE practice")
     
@@ -352,11 +276,7 @@ def historicaltosql(list_hist):
     except Exception as e:
         
         print(e)
-    
-
-
-# In[ ]:
-
+        
 
 historicaltosql(list_hist)
 
