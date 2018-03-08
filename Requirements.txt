@@ -1,0 +1,2 @@
+Python 2.7
+MySQL Workbench 6.3
