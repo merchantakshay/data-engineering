@@ -1,7 +1,6 @@
 
 # coding: utf-8
 
-# In[ ]:
 
 
 #tables in sql should be created before running python script
