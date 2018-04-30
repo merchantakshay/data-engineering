@@ -43,7 +43,7 @@ counter = 0
 #flag is used to differentiate between first run and the next n runs
 def check_database():
     
-    conn = mysql.connector.connect(user = 'root', password = 'Akshay1894@', host = 'localhost', database = 'practice')
+    conn = mysql.connector.connect(user = 'root', password = '***', host = 'localhost', database = 'practice')
     mycursor = conn.cursor()
     mycursor.execute("USE practice")
     
@@ -91,7 +91,7 @@ def extractcurrency_new(r):
 #extract existing data from coins table -- to keep id's constant
 def extract_database():
     
-    conn = mysql.connector.connect(user = 'root', password = 'Akshay1894@', host = 'localhost', database = 'practice')
+    conn = mysql.connector.connect(user = 'root', password = '***', host = 'localhost', database = 'practice')
     mycursor = conn.cursor()
     mycursor.execute("USE practice")
     
@@ -509,7 +509,7 @@ def snapshottosql(list_snap, counter):
     
     else:
         #create connection
-        conn = mysql.connector.connect(user = 'root', password = 'Akshay1894@', host = 'localhost', database = 'practice')
+        conn = mysql.connector.connect(user = 'root', password = '***', host = 'localhost', database = 'practice')
         mycursor = conn.cursor()
         mycursor.execute("USE practice")
 
@@ -594,7 +594,7 @@ def insertintotable(year):
 #insert ignore -- errors ignored
 def historicaltosql(list_hist, counter):
     #create connection
-    conn = mysql.connector.connect(user = 'root', password = 'Akshay1894@', host = 'localhost', database = 'practice')
+    conn = mysql.connector.connect(user = 'root', password = '***', host = 'localhost', database = 'practice')
     mycursor = conn.cursor()
     mycursor.execute("USE practice")
     
@@ -634,7 +634,7 @@ counter = historicaltosql(list_hist, counter)
 if counter>0:
     
     fromaddr = "johndoedatascientist"
-    toaddr = "ddhar3@uic.edu"
+    toaddr = "admin@admin_email.com"
     msg = MIMEMultipart()
     msg['From'] = fromaddr
     msg['To'] = toaddr
