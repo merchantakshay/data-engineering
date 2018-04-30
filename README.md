@@ -5,7 +5,7 @@ Website - https://coinmarketcap.com/
 
 1. Create the tables in MySQL
 2. Change mysql_connector in python depending on local database connection
-3. Change log email to user email
+3. Change log email in python to user email
 4. Run python code
 
 
